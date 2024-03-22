@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# These folders may include various file types such as images (jpg, img), CSV, JSON, etc.
+**/crawl/
+
 # Distribution / packaging
 .Python
 build/
