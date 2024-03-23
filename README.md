@@ -90,7 +90,7 @@
           "https://quotes.toscrape.com/page/2/",
       ]
   
-      def parse(self, response, **kwargs):  # 回调
+      def parse(self, response):  # 回调
           page = response.url.split("/")[-2]
           filename = f"crawl/quotes-{page}.html"
           Path(filename).write_bytes(response.body)
@@ -148,7 +148,7 @@
           "https://quotes.toscrape.com/page/2/",
       ]
   
-      def parse(self, response, **kwargs):
+      def parse(self, response):
           for quote in response.xpath("//div[@class='quote']"):
               yield {
                   "text": quote.xpath("./span[@class='text']/text()").get(),
@@ -315,7 +315,7 @@
 
   
 
-- 详情页数据抓取
+- 详情页
 
   `scrapy.Request(meta)`：前面数据的传递
 
@@ -717,6 +717,7 @@
       def item_completed(self, results, item, info):
           """返回文件的详情信息"""
           print(results)
+          return item
           
   ```
 
@@ -729,20 +730,42 @@
   
   # Configure item pipelines
   ITEM_PIPELINES = {
-     "hb_scrapy.pipelines.HbScrapyPipeline": 300,
+      "hb_scrapy.pipelines.HbScrapyPipeline": 300,
       "hb_scrapy.pipelines.HbSaveImagePipeline": 301,
   }
   IMAGES_STORE = "./crawl"
+  
+  
+  DOWNLOAD_DELAY = 2  # 下载延迟
+  RANDOMIZE_DOWNLOAD_DELAY = True  # 随机化下载延迟
+  
+  ```
+
+  数据库准备
+
+  ```sql
+  create table hb_img (
+      id int auto_increment primary key,
+      title varchar(255) not null,
+      img_src varchar(255) not null,
+      local_path varchar(255) not null
+  );
   
   ```
 
   
 
+## 【案例】bilibili
+
+- 【案例】[bilibili](https://www.bilibili.com/)
+
+  创建项目
+
   
 
-## 【案例】
+  
 
-
+  1
 
 
 

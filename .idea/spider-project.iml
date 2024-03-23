@@ -5,6 +5,8 @@
       <sourceFolder url="file://$MODULE_DIR$/ch02_ssr" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/hb_scrapy" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lotto_scrapy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/fiction17k" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/baidu" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.9 (forScrapy)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
