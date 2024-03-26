@@ -771,6 +771,37 @@
 
 
 
+## 【案例】二手房
+
+- 【案例】二手房
+
+  新建项目
+
+  ```
+  scrapy startproject lianjia_home_scrapy
+  cd lianjia_home_scrapy
+  scrapy genspider lianjia bj.lianjia.com
+  
+  ```
+
+  
+
+  
+
+  1
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 总结
 
 
