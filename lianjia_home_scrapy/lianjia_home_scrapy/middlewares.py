@@ -2,18 +2,14 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-import time
 
 from scrapy import signals
-from scrapy.http import HtmlResponse
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
 
-class Ch02SsrSpiderMiddleware:
+class LianjiaHomeScrapySpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
     # passed objects.
@@ -60,7 +56,7 @@ class Ch02SsrSpiderMiddleware:
         spider.logger.info("Spider opened: %s" % spider.name)
 
 
-class Ch02SsrDownloaderMiddleware:
+class LianjiaHomeScrapyDownloaderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the downloader middleware does not modify the
     # passed objects.
@@ -105,27 +101,3 @@ class Ch02SsrDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info("Spider opened: %s" % spider.name)
-
-
-class SeleniumDownloaderMiddleware:
-    def __init__(self):
-        """初始化"""
-        print("__init__")
-        service = Service(r'D:\soft\tool\chrome-help\chromedriver-win64\chromedriver.exe')
-        self.driver = webdriver.Chrome(service=service)
-
-    def process_request(self, request, spider):
-        print("process_request")
-        self.driver.get(request.url)  # 打开网址
-        time.sleep(3)
-
-        body = self.driver.page_source
-        return HtmlResponse(
-            url=self.driver.current_url,
-            body=body,
-            encoding="utf-8",
-            request=request,
-        )
-
-    def process_response(self, request, response, spider):
-        return response

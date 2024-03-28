@@ -1,4 +1,4 @@
-# Scrapy settings for ch02_ssr project
+# Scrapy settings for lianjia_home_scrapy project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,16 +7,19 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "ch02_ssr"
+BOT_NAME = "lianjia_home_scrapy"
 
-SPIDER_MODULES = ["ch02_ssr.spiders"]
-NEWSPIDER_MODULE = "ch02_ssr.spiders"
+SPIDER_MODULES = ["lianjia_home_scrapy.spiders"]
+NEWSPIDER_MODULE = "lianjia_home_scrapy.spiders"
 
-FEED_EXPORT_FIELDS = ["title", "rank", "label", "area", "time", "duration",
-                      "introduction", "director", "actor", "role", ]
+FEED_EXPORT_FIELDS = ["title", "location", "basic_attributes", "transaction_attributes",
+                      "follow", "time", "time_rl",
+                      "label", "price", "price_avg"]
+
+LOG_LEVEL = "WARNING"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = "ch02_ssr (+http://www.yourdomain.com)"
+# USER_AGENT = "lianjia_home_scrapy (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -27,7 +30,8 @@ ROBOTSTXT_OBEY = False
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-# DOWNLOAD_DELAY = 3
+# DOWNLOAD_DELAY = 1
+# RANDOMIZE_DOWNLOAD_DELAY = True  # 随机化下载延迟
 # The download delay setting will honor only one of:
 # CONCURRENT_REQUESTS_PER_DOMAIN = 16
 # CONCURRENT_REQUESTS_PER_IP = 16
@@ -47,15 +51,14 @@ ROBOTSTXT_OBEY = False
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    "ch02_ssr.middlewares.Ch02SsrSpiderMiddleware": 543,
+#    "lianjia_home_scrapy.middlewares.LianjiaHomeScrapySpiderMiddleware": 543,
 # }
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-DOWNLOADER_MIDDLEWARES = {
-    "ch02_ssr.middlewares.Ch02SsrDownloaderMiddleware": 543,
-    "ch02_ssr.middlewares.SeleniumDownloaderMiddleware": 200,
-}
+# DOWNLOADER_MIDDLEWARES = {
+#    "lianjia_home_scrapy.middlewares.LianjiaHomeScrapyDownloaderMiddleware": 543,
+# }
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -65,9 +68,9 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-    "ch02_ssr.pipelines.Ch02SsrPipeline": 300,
-}
+# ITEM_PIPELINES = {
+#    "lianjia_home_scrapy.pipelines.LianjiaHomeScrapyPipeline": 300,
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
