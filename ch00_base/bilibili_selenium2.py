@@ -17,6 +17,7 @@ cookie_file_path = "crawl/bilibili_cookie.txt"
 # 持久化数据
 csv_file = "crawl/bilibili_comments1.csv"
 data_list = []
+count = 0
 
 
 def get_cookie(wd):
@@ -42,7 +43,7 @@ def login_in(wd):
         wd.add_cookie(i)
 
     wd.refresh()
-    time.sleep(10)  # 让网页加载完毕 防止后面元素找不到
+    time.sleep(15)  # 让网页加载完毕 防止后面元素找不到
 
 
 def parse_data_sub_list(reply_list,
@@ -88,35 +89,35 @@ def parse_data(reply_item):
         sub_reply_list = reply_item.find_elements(By.CLASS_NAME, 'sub-reply-item')
         parse_data_sub_list(sub_reply_list)
 
-        # while True:
-        #     pagination_btn = reply_item.find_elements(By.CLASS_NAME, 'pagination-btn')
-        #     if len(pagination_btn) == 0:
-        #         break  # 如果这条评论没有下一页子评论，则结束循环，获取完主评论后跳到下一条评论
-        #     elif len(pagination_btn) != 0:
-        #         # 如果有下一页，则点击下一页
-        #         # 这里会有3种情况，分别是“只有下一页”、“上一页+下一页”、“只有上一页”
-        #
-        #         if len(pagination_btn) == 1 and pagination_btn[0].text == "上一页":
-        #             break  # 针对只有上一页，则退出循环
-        #         time.sleep(3)  # 等待网页加载
-        #
-        #         if len(pagination_btn) == 1 and pagination_btn[0].text == "下一页":
-        #             # 针对只有下一页，则点击第一个按钮，即下一页
-        #             wd.execute_script("arguments[0].click();", pagination_btn[0])
-        #             time.sleep(3)  # 等待网页加载
-        #             sub_reply_list = reply_item.find_elements(By.CLASS_NAME, 'sub-reply-item')  # 找到这一页完整的子评论
-        #             parse_data_sub_list(sub_reply_list)
-        #
-        #         if len(pagination_btn) == 2:
-        #             # 针对有上一页和下一页，我们要点击第二个按钮，也就是下一页
-        #             wd.execute_script("arguments[0].click();", pagination_btn[1])
-        #             time.sleep(3)  # 等待网页加载
-        #             sub_reply_list = reply_item.find_elements(By.CLASS_NAME, 'sub-reply-item')  # 找到这一页完整的子评论
-        #             parse_data_sub_list(sub_reply_list)
-        #
-        #         save_data()
+        while True:
+            pagination_btn = reply_item.find_elements(By.CLASS_NAME, 'pagination-btn')
+            if len(pagination_btn) == 0:
+                break  # 如果这条评论没有下一页子评论，则结束循环，获取完主评论后跳到下一条评论
+            elif len(pagination_btn) != 0:
+                # 如果有下一页，则点击下一页
+                # 这里会有3种情况，分别是“只有下一页”、“上一页+下一页”、“只有上一页”
 
-        save_data()
+                if len(pagination_btn) == 1 and pagination_btn[0].text == "上一页":
+                    break  # 针对只有上一页，则退出循环
+                time.sleep(3)  # 等待网页加载
+
+                if len(pagination_btn) == 1 and pagination_btn[0].text == "下一页":
+                    # 针对只有下一页，则点击第一个按钮，即下一页
+                    wd.execute_script("arguments[0].click();", pagination_btn[0])
+                    time.sleep(3)  # 等待网页加载
+                    sub_reply_list = reply_item.find_elements(By.CLASS_NAME, 'sub-reply-item')  # 找到这一页完整的子评论
+                    parse_data_sub_list(sub_reply_list)
+
+                if len(pagination_btn) == 2:
+                    # 针对有上一页和下一页，我们要点击第二个按钮，也就是下一页
+                    wd.execute_script("arguments[0].click();", pagination_btn[1])
+                    time.sleep(3)  # 等待网页加载
+                    sub_reply_list = reply_item.find_elements(By.CLASS_NAME, 'sub-reply-item')  # 找到这一页完整的子评论
+                    parse_data_sub_list(sub_reply_list)
+
+                save_data()
+
+        # save_data()
 
 
 def create_csv_if_not_exists(csv_file):

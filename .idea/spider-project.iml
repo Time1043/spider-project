@@ -9,7 +9,7 @@
       <sourceFolder url="file://$MODULE_DIR$/baidu" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lianjia_home_scrapy" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.10 (test06) (2)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.9 (forScrapy)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
