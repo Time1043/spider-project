@@ -12,7 +12,9 @@ BOT_NAME = "lianjia_home_scrapy"
 SPIDER_MODULES = ["lianjia_home_scrapy.spiders"]
 NEWSPIDER_MODULE = "lianjia_home_scrapy.spiders"
 
-FEED_EXPORT_FIELDS = ["title", "location", "condition", "follow", "time", "label", ]
+FEED_EXPORT_FIELDS = ["title", "location", "basic_attributes", "transaction_attributes",
+                      "follow", "time", "time_rl",
+                      "label", "price", "price_avg"]
 
 LOG_LEVEL = "WARNING"
 
@@ -28,7 +30,8 @@ ROBOTSTXT_OBEY = False
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-# DOWNLOAD_DELAY = 3
+# DOWNLOAD_DELAY = 1
+# RANDOMIZE_DOWNLOAD_DELAY = True  # 随机化下载延迟
 # The download delay setting will honor only one of:
 # CONCURRENT_REQUESTS_PER_DOMAIN = 16
 # CONCURRENT_REQUESTS_PER_IP = 16

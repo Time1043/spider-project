@@ -436,6 +436,105 @@
 
   
 
+
+
+- ajax请求
+
+  https://spa1.scrape.center/
+
+  ```
+  cd ch02_ssr
+  scrapy genspider spa1 spa1.scrape.center/
+  
+  ```
+
+  selenium 写在下载中间件 (不能写在spiders或download) (settings注册)
+
+  ```python
+  class SeleniumDownloaderMiddleware:
+      def __init__(self):
+          """初始化"""
+          print("__init__")
+          service = Service(r'D:\soft\tool\chrome-help\chromedriver-win64\chromedriver.exe')
+          self.driver = webdriver.Chrome(service=service)
+  
+      def process_request(self, request, spider):
+          print("process_request")
+          self.driver.get(request.url)  # 打开网址
+          time.sleep(3)
+  
+          body = self.driver.page_source
+          return HtmlResponse(
+              url=self.driver.current_url,
+              body=body,
+              encoding="utf-8",
+              request=request,
+          )
+  
+      def process_response(self, request, response, spider):
+          return response
+  ```
+
+  页面结构有所改变 需要重写spider
+
+  ```python
+  import scrapy
+  from scrapy import Request
+  
+  from ch02_ssr.items import MovieItem
+  
+  
+  class Spa1Spider(scrapy.Spider):
+      name = "spa1"
+      allowed_domains = ["spa1.scrape.center"]
+      start_urls = [f"https://spa1.scrape.center/page/{i}" for i in range(1, 11)]
+  
+      def parse_detail(self, response):
+          movie_item = response.meta["movie_item"]
+  
+          movie_item["introduction"] = response.xpath("//div[@class='drama']/p/text()").get().strip()
+          movie_item["director"] = response.xpath("//p[@class='name text-center m-b-none m-t-xs']/text()").get()
+          movie_item["actor"] = response.xpath(
+              "//p[@class='el-tooltip name text-center m-b-none m-t-xs item']/text()").getall()
+          movie_item["role"] = response.xpath(
+              "//p[@class='el-tooltip role text-center m-b-none m-t-xs item']/text()").getall()
+  
+          yield movie_item  # 最终返回
+  
+      def parse(self, response):
+          for item in response.xpath("//div[@class='el-card item m-t is-hover-shadow']"):
+              movie_item = MovieItem()
+              movie_item["title"] = item.xpath(".//h2[@class='m-b-sm']/text()").get()
+              movie_item["rank"] = item.xpath(".//p[@class='score m-t-md m-b-n-sm']/text()").get().strip()
+              movie_item["label"] = item.xpath(".//div[@class='categories']/button/span/text()").getall()
+              movie_item["area"] = item.xpath(".//div[@class='m-v-sm info']/span[1]/text()").get()
+              movie_item["time"] = item.xpath(".//div[@class='m-v-sm info']/span[3]/text()").get()
+              movie_item["duration"] = item.xpath(".//div[@class='m-v-sm info'][2]/span/text()").get()
+  
+              # 详情页
+              detail_utl = "https://spa1.scrape.center" + item.xpath(".//div[@class='el-row']/div/a/@href").get()
+              yield Request(detail_utl, callback=self.parse_detail, meta={"movie_item": movie_item})  # 前面数据传递
+  
+  ```
+
+  
+
+  1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 【案例】500
 
 - 【案例】[500双色球](https://datachart.500.com/ssq/)
@@ -662,7 +761,7 @@
               "fields": "pins:PIN, total, facets, split_words, relations, rec_topic_material",
           }
           url_with_params = response.urljoin('?' + '&'.join([f'{k}={v}' for k, v in params.items()]))
-          yield scrapy.Request(url_with_params, callback=self.parse_json, meta={"key_word": key_word})
+          yield scrapy.Request(url_with_params, callback=self.parse_json, meta={"	key_word": key_word})
   
       def parse_json(self, response, **kwargs):
           """拿到详情页url，即url_detail，后将此url封装成Request对象给调度器"""

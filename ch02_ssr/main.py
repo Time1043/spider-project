@@ -8,5 +8,6 @@ from scrapy import cmdline
 
 if __name__ == '__main__':
     print("--------------- start ---------------")
-    cmdline.execute("scrapy crawl ssr".split())
+    # cmdline.execute("scrapy crawl ssr".split())
+    cmdline.execute("scrapy crawl spa1 -O crawl/spa1.csv".split())
     print("--------------- end ---------------")

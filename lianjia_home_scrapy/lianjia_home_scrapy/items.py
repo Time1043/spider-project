@@ -7,11 +7,13 @@ import scrapy
 
 
 class LianjiaHomeScrapyItem(scrapy.Item):
-    # define the fields for your item here like:
     title = scrapy.Field()
     location = scrapy.Field()
-    condition = scrapy.Field()
+    basic_attributes = scrapy.Field()
+    transaction_attributes = scrapy.Field()
     follow = scrapy.Field()
+    time_rl = scrapy.Field()
     time = scrapy.Field()
     label = scrapy.Field()
-
+    price = scrapy.Field()
+    price_avg = scrapy.Field()
