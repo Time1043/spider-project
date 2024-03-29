@@ -7,7 +7,7 @@ class ZonghengSpider(scrapy.Spider):
     name = "zongheng"
     allowed_domains = ["book.zongheng.com"]
     start_urls = [f"https://book.zongheng.com/store/c0/c0/b0/u0/p{i}/v9/s9/t0/u0/i1/ALL.html"
-                  for i in range(1, 2)]
+                  for i in range(1, 20)]
 
     def parse(self, response):
         """解析列表页"""
@@ -31,7 +31,7 @@ class ZonghengSpider(scrapy.Spider):
         """解析详情页"""
         zongheng_item = response.meta["item"]
         print("------------------------------")
-        # print(response.text)
+        print(response.text)
         click = response.xpath("//div[@class='book-info--nums']/div[1]/span/text()").get()
         recommend_all = response.xpath("//div[@class='book-info--nums']/div[2]/span/text()").get()
         recommend_week = response.xpath("//div[@class='book-info--nums']/div[3]/span/text()").get()
@@ -44,6 +44,14 @@ class ZonghengSpider(scrapy.Spider):
             recommend_week = response.xpath("//div[@class='bookcount-numbox'][3]/span/text()").get()
             word_count = response.xpath("//span[@class='book-wordnum-num']/text()").get()
             time = response.xpath("//div[@class='bookup-lnk'][2]/text()").get()
+
+        zongheng_item['click'] = click
+        zongheng_item['recommend_all'] = recommend_all
+        zongheng_item['recommend_week'] = recommend_week
+        zongheng_item['word_count'] = word_count
+        zongheng_item['novel_Lastupdate'] = time
+
+        yield zongheng_item
 
         print(zongheng_item['novel_Name'])
         print({"click": click, "recommend_all": recommend_all, "recommend_week": recommend_week,
