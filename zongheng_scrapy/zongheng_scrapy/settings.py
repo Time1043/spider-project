@@ -1,4 +1,4 @@
-# Scrapy settings for lianjia_home_scrapy project
+# Scrapy settings for zongheng_scrapy project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,19 +7,17 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "lianjia_home_scrapy"
+BOT_NAME = "zongheng_scrapy"
 
-SPIDER_MODULES = ["lianjia_home_scrapy.spiders"]
-NEWSPIDER_MODULE = "lianjia_home_scrapy.spiders"
+SPIDER_MODULES = ["zongheng_scrapy.spiders"]
+NEWSPIDER_MODULE = "zongheng_scrapy.spiders"
 
-# FEED_EXPORT_FIELDS = ["title", "location", "basic_attributes", "transaction_attributes",
-#                       "follow", "time", "time_rl", "label", "price", "price_avg"]
-FEED_EXPORT_FIELDS = ["title", "location", "basic_attributes", "follow", "time_rl", "label", "price", "price_avg"]
-
+FEED_EXPORT_FIELDS = ['novel_Name', 'novel_Author', 'novel_Type', 'novel_State', 'novel_Lastupdate',
+                      'novel_Latestchapters', 'novel_Synopsis',
+                      'click', 'recommend_all', 'recommend_week', 'word_count']
 LOG_LEVEL = "WARNING"
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = "lianjia_home_scrapy (+http://www.yourdomain.com)"
+# USER_AGENT = "zongheng_scrapy (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -30,8 +28,7 @@ ROBOTSTXT_OBEY = False
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 1
-RANDOMIZE_DOWNLOAD_DELAY = True  # 随机化下载延迟
+# DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
 # CONCURRENT_REQUESTS_PER_DOMAIN = 16
 # CONCURRENT_REQUESTS_PER_IP = 16
@@ -51,13 +48,13 @@ RANDOMIZE_DOWNLOAD_DELAY = True  # 随机化下载延迟
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    "lianjia_home_scrapy.middlewares.LianjiaHomeScrapySpiderMiddleware": 543,
+#    "zongheng_scrapy.middlewares.ZonghengScrapySpiderMiddleware": 543,
 # }
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 # DOWNLOADER_MIDDLEWARES = {
-#    "lianjia_home_scrapy.middlewares.LianjiaHomeScrapyDownloaderMiddleware": 543,
+#    "zongheng_scrapy.middlewares.ZonghengScrapyDownloaderMiddleware": 543,
 # }
 
 # Enable or disable extensions
@@ -68,9 +65,9 @@ RANDOMIZE_DOWNLOAD_DELAY = True  # 随机化下载延迟
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    "lianjia_home_scrapy.pipelines.LianjiaHomeScrapyPipeline": 300,
-# }
+ITEM_PIPELINES = {
+    "zongheng_scrapy.pipelines.ZonghengScrapyPipeline": 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

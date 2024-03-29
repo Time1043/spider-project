@@ -523,20 +523,6 @@
 
   
 
-  1
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ## 【案例】500
@@ -892,6 +878,29 @@
   
 
   1
+
+
+
+
+
+## 【案例】纵横小说
+
+- 【案例】[纵横小说](https://book.zongheng.com/store/c0/c0/b0/u0/p1/v9/s9/t0/u0/i1/ALL.html)
+
+  ```
+  scrapy startproject zongheng_scrapy
+  cd zongheng_scrapy
+  scrapy genspider zongheng zongheng.com
+  
+  ```
+
+  
+
+  
+
+  1
+
+
 
 
 
