@@ -1,5 +1,210 @@
 # spider-project
 
+- 介绍
+
+  爬虫的应用：批量采集数据(文本 音频 视频)、模拟用户行为 (点赞 下单)
+
+  爬虫的原理：模拟客户端、向服务器发送网络请求
+
+
+
+- BigPicture
+
+  基础爬虫：基础模块(req、bs、selenium)、爬虫框架scrapy
+
+  逆向爬虫：防护绕过、js逆向、图片验证码、滑块验证、app逆向
+
+
+
+- 参考
+
+  [很好的教程](https://github.com/NanmiCoder/MediaCrawler)、[很好的教程](https://github.com/Gedanke/Reptile_study_notes/blob/master/notes/Module_3/lecture_16.md)、[破反爬的很好教程](https://github.com/Kr1s77/awesome-python-login-model)、[很好的教程](https://www.qixinbo.info/2023/01/15/web-crawler-4/)、[不错的教程](https://zhuanlan.zhihu.com/p/45478178)
+
+  https://juejin.cn/post/7226187111329398839
+
+
+
+# 基础爬虫
+
+## 【案例】基础大杂烩
+
+### 文本爬虫
+
+
+
+
+
+### 图片视频爬虫
+
+
+
+
+
+## 基础理论
+
+- 网站全流程
+
+- 爬虫：用代码伪装、发送请求得到响应
+
+  爬虫全流程：
+
+  发送请求
+
+  得到响应
+
+  解析数据
+
+- 存在反爬：校验请求头
+
+  User-Agent、Referer、Cookie；proxy
+
+
+
+
+
+## 抓包分析
+
+- 抓包工具：服务器和客户端的第三方中间件
+
+  [reqable(国内)](https://reqable.com/en-US/download)、charles、fiddler
+
+  
+
+- 【案例】微信公众号
+
+  ```python
+  # -*- coding: utf-8 -*-
+  # @Time    : 2024/3/31 8:46
+  # @Author  : yingzhu
+  # @FileName: gz.py
+  
+  import requests
+  
+  
+  def req_gz():
+      url = "https://mp.weixin.qq.com/s?__biz=MzA5NzI1ODkzNQ==&mid=2451450218&idx=1&sn=e5c06e14960e943742f2a0d07fe327b8&chksm=86d210a4cd5e203bfeac7014673c50b35c043e8d09b4a5e5cb75ec68ac4eb691807f14f1d774&scene=126&sessionid=1711847075&subscene=227&clicktime=1711847138&enterid=1711847138&key=7ac31fc11733e01d2e99e38980d687291a52150e8da78e0697f16e5e5c7c9f592148b4a039fa842b0f088971d6d0250167bb99d52440f40e0ab4e142ffcf2723dc8e8ac30cbf196dcd19a67972ec851ef54b637e1944b2fd0ee8b6dc209806afaf6d54c02ada36eda5bc428ac6f0d1016c74923c37e34aea045b98a3077b5aef&ascene=0&uin=MzEzNjEzNzc1Ng%3D%3D&devicetype=Windows+11+x64&version=6309092b&lang=zh_CN&countrycode=CN&exportkey=n_ChQIAhIQle4ypdFFq%2FQ2Vc8anb8e2hLgAQIE97dBBAEAAAAAADWCNo8vF0wAAAAOpnltbLcz9gKNyK89dVj0K3AGERusLseH1iBfU4IJzdrVz8226on%2BeySDZZGlCfgAqH8cTchGeQuArnaZIrPjGrsCVm2JOuYijS0vuN%2F9naHBKLDoo6MBTeaVIFHoDzlx97HPlws2yneBs2ev6HeTdnEy9%2F8cXItmV%2BBjz%2B5POMKX1fIiaSHJXX8Yjy0S2FPLv5FmNNL0V%2BwSyB2%2BFkrH2CBWb8FiaTbS5uUb0Q7nqZC3lMiYdtjx2X%2B6fJUSqFjuVTsf%2Fa41YTEE&acctmode=0&pass_ticket=np4ckNMKro5lryfLhSuw6h4YS%2FAhvXKb61q%2BNkH7w%2BWOXLXnXujMi%2FTMhIV4N3C7q7GS2juoRHfxDe3etPIJDg%3D%3D&wx_header=1&fasttmpl_type=0&fasttmpl_fullversion=7139752-zh_CN-zip&fasttmpl_flag=1"
+      headers = {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x6309092b) XWEB/9079 Flue',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+          'cache-control': 'max-age=0',
+          'x-wechat-key': '7ac31fc11733e01d2e99e38980d687291a52150e8da78e0697f16e5e5c7c9f592148b4a039fa842b0f088971d6d0250167bb99d52440f40e0ab4e142ffcf2723dc8e8ac30cbf196dcd19a67972ec851ef54b637e1944b2fd0ee8b6dc209806afaf6d54c02ada36eda5bc428ac6f0d1016c74923c37e34aea045b98a3077b5aef',
+          'x-wechat-uin': 'MzEzNjEzNzc1Ng%3D%3D',
+          'exportkey': 'n_ChQIAhIQle4ypdFFq%2FQ2Vc8anb8e2hLgAQIE97dBBAEAAAAAADWCNo8vF0wAAAAOpnltbLcz9gKNyK89dVj0K3AGERusLseH1iBfU4IJzdrVz8226on%2BeySDZZGlCfgAqH8cTchGeQuArnaZIrPjGrsCVm2JOuYijS0vuN%2F9naHBKLDoo6MBTeaVIFHoDzlx97HPlws2yneBs2ev6HeTdnEy9%2F8cXItmV%2BBjz%2B5POMKX1fIiaSHJXX8Yjy0S2FPLv5FmNNL0V%2BwSyB2%2BFkrH2CBWb8FiaTbS5uUb0Q7nqZC3lMiYdtjx2X%2B6fJUSqFjuVTsf%2Fa41YTEE',
+          'upgrade-insecure-requests': '1',
+          'sec-fetch-site': 'same-origin',
+          'sec-fetch-mode': 'navigate',
+          'sec-fetch-dest': 'document',
+          'accept-language': 'zh-CN,zh;q=0.9',
+      }
+      resp = requests.get(url=url, headers=headers)
+      print(resp.text)
+  
+  
+  if __name__ == '__main__':
+      print("------------------ start ------------------")
+  
+      req_gz()
+  
+      print("------------------ end ------------------")
+  
+  ```
+
+  
+
+  ```python
+  # -*- coding: utf-8 -*-
+  # @Time    : 2024/3/31 8:46
+  # @Author  : yingzhu
+  # @FileName: gz.py
+  
+  import requests
+  from requests.adapters import HTTPAdapter
+  from urllib3 import Retry
+  
+  
+  def req_gz():
+      url = "https://mp.weixin.qq.com/s?__biz=MzA5NzI1ODkzNQ==&mid=2451450218&idx=1&sn=e5c06e14960e943742f2a0d07fe327b8&chksm=86d210a4cd5e203bfeac7014673c50b35c043e8d09b4a5e5cb75ec68ac4eb691807f14f1d774&scene=126&sessionid=1711847075&subscene=227&clicktime=1711847138&enterid=1711847138&key=7ac31fc11733e01d2e99e38980d687291a52150e8da78e0697f16e5e5c7c9f592148b4a039fa842b0f088971d6d0250167bb99d52440f40e0ab4e142ffcf2723dc8e8ac30cbf196dcd19a67972ec851ef54b637e1944b2fd0ee8b6dc209806afaf6d54c02ada36eda5bc428ac6f0d1016c74923c37e34aea045b98a3077b5aef&ascene=0&uin=MzEzNjEzNzc1Ng%3D%3D&devicetype=Windows+11+x64&version=6309092b&lang=zh_CN&countrycode=CN&exportkey=n_ChQIAhIQle4ypdFFq%2FQ2Vc8anb8e2hLgAQIE97dBBAEAAAAAADWCNo8vF0wAAAAOpnltbLcz9gKNyK89dVj0K3AGERusLseH1iBfU4IJzdrVz8226on%2BeySDZZGlCfgAqH8cTchGeQuArnaZIrPjGrsCVm2JOuYijS0vuN%2F9naHBKLDoo6MBTeaVIFHoDzlx97HPlws2yneBs2ev6HeTdnEy9%2F8cXItmV%2BBjz%2B5POMKX1fIiaSHJXX8Yjy0S2FPLv5FmNNL0V%2BwSyB2%2BFkrH2CBWb8FiaTbS5uUb0Q7nqZC3lMiYdtjx2X%2B6fJUSqFjuVTsf%2Fa41YTEE&acctmode=0&pass_ticket=np4ckNMKro5lryfLhSuw6h4YS%2FAhvXKb61q%2BNkH7w%2BWOXLXnXujMi%2FTMhIV4N3C7q7GS2juoRHfxDe3etPIJDg%3D%3D&wx_header=1&fasttmpl_type=0&fasttmpl_fullversion=7139752-zh_CN-zip&fasttmpl_flag=1"
+      headers = {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x6309092b) XWEB/9079 Flue',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+          'cache-control': 'max-age=0',
+          'x-wechat-key': '7ac31fc11733e01d2e99e38980d687291a52150e8da78e0697f16e5e5c7c9f592148b4a039fa842b0f088971d6d0250167bb99d52440f40e0ab4e142ffcf2723dc8e8ac30cbf196dcd19a67972ec851ef54b637e1944b2fd0ee8b6dc209806afaf6d54c02ada36eda5bc428ac6f0d1016c74923c37e34aea045b98a3077b5aef',
+          'x-wechat-uin': 'MzEzNjEzNzc1Ng%3D%3D',
+          'exportkey': 'n_ChQIAhIQle4ypdFFq%2FQ2Vc8anb8e2hLgAQIE97dBBAEAAAAAADWCNo8vF0wAAAAOpnltbLcz9gKNyK89dVj0K3AGERusLseH1iBfU4IJzdrVz8226on%2BeySDZZGlCfgAqH8cTchGeQuArnaZIrPjGrsCVm2JOuYijS0vuN%2F9naHBKLDoo6MBTeaVIFHoDzlx97HPlws2yneBs2ev6HeTdnEy9%2F8cXItmV%2BBjz%2B5POMKX1fIiaSHJXX8Yjy0S2FPLv5FmNNL0V%2BwSyB2%2BFkrH2CBWb8FiaTbS5uUb0Q7nqZC3lMiYdtjx2X%2B6fJUSqFjuVTsf%2Fa41YTEE',
+          'upgrade-insecure-requests': '1',
+          'sec-fetch-site': 'same-origin',
+          'sec-fetch-mode': 'navigate',
+          'sec-fetch-dest': 'document',
+          'accept-language': 'zh-CN,zh;q=0.9',
+      }
+      # 设置重试策略
+      retry_strategy = Retry(
+          total=3,  # 总重试次数
+          read=2,  # 读取重试次数
+          connect=2,  # 连接重试次数
+          backoff_factor=0.1  # 退避因子
+      )
+      adapter = HTTPAdapter(max_retries=retry_strategy)
+      # 创建带有重试策略的session对象
+      with requests.Session() as session:
+          session.mount("https://", adapter)
+          session.mount("http://", adapter)
+          
+          try:
+              resp = session.get(url=url, headers=headers, verify=False)
+              print(resp.text)
+          except requests.exceptions.RequestException as e:
+              print(f"请求失败: {e}")
+  
+  
+  if __name__ == '__main__':
+      print("------------------ start ------------------")
+  
+      req_gz()
+  
+      print("------------------ end ------------------")
+  ```
+
+  1
+
+
+
+
+
+
+
+## 发送请求 requests模块
+
+
+
+
+
+## 解析数据 bs4 xpath css re
+
+
+
+
+
+
+
+## 异步爬虫 Thread
+
+
+
+## 自动化工具 selenium
+
+- Download
+
+  https://googlechromelabs.github.io/chrome-for-testing/
+
+
+
+
+
+
+
+# 爬虫框架 scrapy
+
 - 定位
 
   scrapy：工程化
